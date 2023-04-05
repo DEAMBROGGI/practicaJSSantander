@@ -1,0 +1,14 @@
+*{
+    margin: 0px;
+    padding: 0px ;
+}
+
+main{
+    width: 100%;
+    min-height: 80vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
