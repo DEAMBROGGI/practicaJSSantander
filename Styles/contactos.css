@@ -1,0 +1,28 @@
+#form{
+    width: 100vw;
+    height: auto;
+ 
+}
+
+form{
+    height: 80vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.form_input{
+    padding-top: 20px;
+}
+
+.form_input input {
+    width: 300px;
+    height: 40px;
+    border-radius: 10px;
+}
+
+.form_input label {
+    font-size: 30px;
+    padding-right: 10px;
+}

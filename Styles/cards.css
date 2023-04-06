@@ -1,0 +1,56 @@
+.item {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 240px;
+    height: 260px;
+    border-radius: 5px;
+    background-color: rgba(129, 123, 125, 0.329);
+    color: white;
+    border: 1px solid black;
+}
+.titulo_dos {
+    font-size: 18px;
+    font-weight: bolder;
+    text-align: center;
+    color: rgb(0, 0, 0);
+}
+
+.detalles {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.detalles p {
+    font-size: 15px;
+    margin: 0px 10px;
+}
+
+.precio {
+    font-weight: bolder;
+}
+
+.boton_d {
+    width: fit-content;
+    border: 2px solid rgb(223, 72, 120);
+    border-radius: 8px;
+    padding: 3px 5px;
+    box-shadow: -2px -2px 6px 2px rgba(0, 0, 0, 0.52);
+}
+
+.boton_d a {
+    text-decoration-line: none;
+    color: black;
+}
+
+
+.item img {
+    width: 85%;
+    height: 130px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+    box-shadow: -4px -4px 10px 3px rgba(0, 0, 0, 0.52);
+}
