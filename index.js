@@ -5,6 +5,7 @@ let fechaBase = datosAmazing.fechaActual
 let textoHTML = document.getElementById("form")
 let ulNombreEventos = document.getElementById("eventos")
 let arrayAFiltrar = []
+var searchContainer = document.getElementById("searchContainer")
 function ChangeTemplateLayaout() {
 
     switch (initialState.paginaANavegar) {
@@ -12,12 +13,15 @@ function ChangeTemplateLayaout() {
         case "EventosPasados":
             let eventosPasados = eventos.filter(evento => evento.date < fechaBase)
             arrayAFiltrar = eventosPasados
+            searchContainer.style.display = "flex"
+            
             pintarHTML(eventosPasados)
             //console.log("Ocultar Contactos, estadisticas y Filtrar datosEventos donde los eventos sean menores a la fechaBase")
             break;
         case "EventosFuturos":
             let eventosFuturos = eventos.filter(evento => evento.date > fechaBase)
             arrayAFiltrar = eventosFuturos
+            searchContainer.style.display = "flex"
             pintarHTML(eventosFuturos)
             //console.log("Ocultar Contactos, estadisticas y Filtrar datosEventos donde los eventos sean mayores a la fechaBase")
             break;
@@ -37,12 +41,14 @@ function ChangeTemplateLayaout() {
             </form>
             `
             ulNombreEventos.innerHTML = ""
+            searchContainer.style.display = "none"
             //console.log("Ocultar las Cards o Estadisticas y va a mostrar el formulario de contactos")
             break;
         case "Estadisticas":
             texto = "Estas en la pagina de Estadistica"
             textoHTML.innerHTML = texto
             ulNombreEventos.innerHTML = ""
+            searchContainer.style.display = "none"
             //console.log("Ocultar las Cards o Contactos y va a mostrar Tabla de estadisticas")
             break;
         default:
@@ -51,6 +57,7 @@ function ChangeTemplateLayaout() {
             InitAppStyle.style.backgroundColor = "pink"
             InitAppStyle.disabled = true
             arrayAFiltrar = eventos
+            searchContainer.style.display = "flex"
             pintarHTML(eventos)
         //console.log("Ocultar Contactos, estadisticas y Mostrar toda la info de datosEventos = todos los eventos")
     }
