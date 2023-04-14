@@ -4,25 +4,27 @@ let eventos = datosAmazing.eventos
 let fechaBase = datosAmazing.fechaActual
 let textoHTML = document.getElementById("form")
 let ulNombreEventos = document.getElementById("eventos")
-
+let arrayAFiltrar = []
 function ChangeTemplateLayaout() {
 
     switch (initialState.paginaANavegar) {
 
         case "EventosPasados":
-            let eventosPasados = eventos.filter(evento =>  evento.date < fechaBase)
+            let eventosPasados = eventos.filter(evento => evento.date < fechaBase)
+            arrayAFiltrar = eventosPasados
             pintarHTML(eventosPasados)
             //console.log("Ocultar Contactos, estadisticas y Filtrar datosEventos donde los eventos sean menores a la fechaBase")
             break;
         case "EventosFuturos":
-            let eventosFuturos = eventos.filter(evento =>  evento.date > fechaBase)
+            let eventosFuturos = eventos.filter(evento => evento.date > fechaBase)
+            arrayAFiltrar = eventosFuturos
             pintarHTML(eventosFuturos)
             //console.log("Ocultar Contactos, estadisticas y Filtrar datosEventos donde los eventos sean mayores a la fechaBase")
             break;
         case "Contactos":
-             
-            textoHTML.innerHTML = 
-            `
+
+            textoHTML.innerHTML =
+                `
             <form action="">
             <div class="form_input">
             <label for="email"><i class="fa-solid fa-user"></i></label>
@@ -34,7 +36,7 @@ function ChangeTemplateLayaout() {
             </div>
             </form>
             `
-            ulNombreEventos.innerHTML =""
+            ulNombreEventos.innerHTML = ""
             //console.log("Ocultar las Cards o Estadisticas y va a mostrar el formulario de contactos")
             break;
         case "Estadisticas":
@@ -48,7 +50,7 @@ function ChangeTemplateLayaout() {
             let InitAppStyle = document.getElementById("Home")
             InitAppStyle.style.backgroundColor = "pink"
             InitAppStyle.disabled = true
-
+            arrayAFiltrar = eventos
             pintarHTML(eventos)
         //console.log("Ocultar Contactos, estadisticas y Mostrar toda la info de datosEventos = todos los eventos")
     }
@@ -79,8 +81,8 @@ for (let index = 0; index < buttons.length; index++) {
 }   //comentario de test
 
 
-function pintarHTML(array){
-    
+function pintarHTML(array) {
+
     let nombreEventosHTML = ""
     array.map(evento =>
         nombreEventosHTML +=
@@ -95,6 +97,35 @@ function pintarHTML(array){
       </div>
         `
     )
+
     ulNombreEventos.innerHTML = nombreEventosHTML
     textoHTML.innerHTML = ""
+
 }
+
+var inputSearch = document.getElementById("inputSearch")
+
+inputSearch.addEventListener("change", function (evento) { capturaEvento(evento) })
+
+function capturaEvento(evento) {
+    //Capturo lo que el usuario ingresa en el input
+    var datoInput = evento.target.value
+
+    // A lo capturado le quito espacios en blanco anteriores y posteriores con trim()
+    // Ademas a lo ingresado lo paso todo a minuscula con toLowerCase()
+    var datoSinEspacios = datoInput.trim().toLowerCase()
+
+    //Aplico un filtro a todos los eventos donde el nombre del evento incluya lo que ingreso el usuario 
+    // con los metodos trim y toLowerCase
+    
+    var filtrado = arrayAFiltrar.filter(evento => evento.name.toLowerCase().includes(datoSinEspacios))
+    console.log(filtrado)
+
+    if(filtrado.length === 0){
+        ulNombreEventos.innerHTML = `<h1 class="ceroResult" >No se encontraron eventos para tu busqueda </h1>`
+    }
+    else{
+    pintarHTML(filtrado)
+    }
+}
+
