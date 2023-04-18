@@ -14,8 +14,10 @@ function ChangeTemplateLayaout() {
             let eventosPasados = eventos.filter(evento => evento.date < fechaBase)
             arrayAFiltrar = eventosPasados
             searchContainer.style.display = "flex"
-            
+
             pintarHTML(eventosPasados)
+            eventsCategories(eventosPasados)
+        
             //console.log("Ocultar Contactos, estadisticas y Filtrar datosEventos donde los eventos sean menores a la fechaBase")
             break;
         case "EventosFuturos":
@@ -23,6 +25,8 @@ function ChangeTemplateLayaout() {
             arrayAFiltrar = eventosFuturos
             searchContainer.style.display = "flex"
             pintarHTML(eventosFuturos)
+            eventsCategories(eventosFuturos)
+            
             //console.log("Ocultar Contactos, estadisticas y Filtrar datosEventos donde los eventos sean mayores a la fechaBase")
             break;
         case "Contactos":
@@ -59,6 +63,8 @@ function ChangeTemplateLayaout() {
             arrayAFiltrar = eventos
             searchContainer.style.display = "flex"
             pintarHTML(eventos)
+            eventsCategories(eventos)
+           
         //console.log("Ocultar Contactos, estadisticas y Mostrar toda la info de datosEventos = todos los eventos")
     }
 
@@ -124,15 +130,69 @@ function capturaEvento(evento) {
 
     //Aplico un filtro a todos los eventos donde el nombre del evento incluya lo que ingreso el usuario 
     // con los metodos trim y toLowerCase
-    
+
     var filtrado = arrayAFiltrar.filter(evento => evento.name.toLowerCase().includes(datoSinEspacios))
     console.log(filtrado)
 
-    if(filtrado.length === 0){
+    if (filtrado.length === 0) {
         ulNombreEventos.innerHTML = `<h1 class="ceroResult" >No se encontraron eventos para tu busqueda </h1>`
     }
-    else{
-    pintarHTML(filtrado)
+    else {
+        pintarHTML(filtrado)
     }
 }
 
+//CREACION DINAMICA DE CHECKBOX POR CATEGORIA
+
+function eventsCategories(array) {
+    let categories = array.map(evento => evento.category)
+    let unica = new Set(categories)
+    let lastCategories = [...unica]
+
+    let categoriasEventos = ""
+    lastCategories.map(category =>
+        categoriasEventos +=
+        `
+    <label><input type="checkbox" value="${category}"> ${category}</label>
+    `
+    )
+    document.getElementById("checkcategories").innerHTML = categoriasEventos
+
+    checkboxListener()
+}
+
+function checkboxListener(){
+//ESCUCHA Y GUARDADO DE CHECKBOX CHECKED
+// Por un selectorAll capturo las etiquetas input de tipo checkbox
+var checkboxs = document.querySelectorAll('input[type=checkbox')
+
+// creo un array vacio para poder guardar los datos de los checkbox con condicion checked true
+let checkedCheckboxes = []
+
+// recorro cada uno de los input checkbox y les aplico un escuchador de eventos change
+for (i = 0; i < checkboxs.length; i++) {
+    checkboxs[i].addEventListener("change", function () {
+
+    // limpio el array donde voy a guardar los input con checked true ya que utilizo un metodo push
+    // caso contrario se van a agregar mas eventos
+        checkedCheckboxes = []
+
+        // recorro el array de checkbox para extrer aquellos cuyo atributo checked sea true
+        for (i = 0; i < checkboxs.length; i++) {
+
+            if (checkboxs[i].checked) {
+
+                // si se cumple la condicion de checked true los empujo al array que defini para almacenar
+                // los checkbox chequeados
+                checkedCheckboxes.push(checkboxs[i].value)
+            }
+        }
+
+// FILTRAR LOS EVENTOS EN FUNCION DE LAS CATEGORIAS CHEQUEADAS
+        console.log(checkedCheckboxes)
+        console.log(arrayAFiltrar)
+
+    })
+
+}
+}
