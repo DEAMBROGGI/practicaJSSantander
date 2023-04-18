@@ -17,7 +17,7 @@ function ChangeTemplateLayaout() {
 
             pintarHTML(eventosPasados)
             eventsCategories(eventosPasados)
-        
+
             //console.log("Ocultar Contactos, estadisticas y Filtrar datosEventos donde los eventos sean menores a la fechaBase")
             break;
         case "EventosFuturos":
@@ -26,7 +26,7 @@ function ChangeTemplateLayaout() {
             searchContainer.style.display = "flex"
             pintarHTML(eventosFuturos)
             eventsCategories(eventosFuturos)
-            
+
             //console.log("Ocultar Contactos, estadisticas y Filtrar datosEventos donde los eventos sean mayores a la fechaBase")
             break;
         case "Contactos":
@@ -64,7 +64,7 @@ function ChangeTemplateLayaout() {
             searchContainer.style.display = "flex"
             pintarHTML(eventos)
             eventsCategories(eventos)
-           
+
         //console.log("Ocultar Contactos, estadisticas y Mostrar toda la info de datosEventos = todos los eventos")
     }
 
@@ -118,7 +118,7 @@ function pintarHTML(array) {
 
 var inputSearch = document.getElementById("inputSearch")
 
-inputSearch.addEventListener("change", function (evento) { capturaEvento(evento) })
+inputSearch.addEventListener("keyup", function (evento) { capturaEvento(evento) })
 
 function capturaEvento(evento) {
     //Capturo lo que el usuario ingresa en el input
@@ -161,38 +161,46 @@ function eventsCategories(array) {
     checkboxListener()
 }
 
-function checkboxListener(){
-//ESCUCHA Y GUARDADO DE CHECKBOX CHECKED
-// Por un selectorAll capturo las etiquetas input de tipo checkbox
-var checkboxs = document.querySelectorAll('input[type=checkbox')
+function checkboxListener() {
+    //ESCUCHA Y GUARDADO DE CHECKBOX CHECKED
+    // Por un selectorAll capturo las etiquetas input de tipo checkbox
+    var checkboxs = document.querySelectorAll('input[type=checkbox')
 
-// creo un array vacio para poder guardar los datos de los checkbox con condicion checked true
-let checkedCheckboxes = []
+    // creo un array vacio para poder guardar los datos de los checkbox con condicion checked true
+    let checkedCheckboxes = []
 
-// recorro cada uno de los input checkbox y les aplico un escuchador de eventos change
-for (i = 0; i < checkboxs.length; i++) {
-    checkboxs[i].addEventListener("change", function () {
+    // recorro cada uno de los input checkbox y les aplico un escuchador de eventos change
+    for (i = 0; i < checkboxs.length; i++) {
+        checkboxs[i].addEventListener("change", function () {
 
-    // limpio el array donde voy a guardar los input con checked true ya que utilizo un metodo push
-    // caso contrario se van a agregar mas eventos
-        checkedCheckboxes = []
+            // limpio el array donde voy a guardar los input con checked true ya que utilizo un metodo push
+            // caso contrario se van a agregar mas eventos
+            checkedCheckboxes = []
 
-        // recorro el array de checkbox para extrer aquellos cuyo atributo checked sea true
-        for (i = 0; i < checkboxs.length; i++) {
+            // recorro el array de checkbox para extrer aquellos cuyo atributo checked sea true
+            for (i = 0; i < checkboxs.length; i++) {
 
-            if (checkboxs[i].checked) {
+                if (checkboxs[i].checked) {
 
-                // si se cumple la condicion de checked true los empujo al array que defini para almacenar
-                // los checkbox chequeados
-                checkedCheckboxes.push(checkboxs[i].value)
+                    // si se cumple la condicion de checked true los empujo al array que defini para almacenar
+                    // los checkbox chequeados
+                    checkedCheckboxes.push(checkboxs[i].value)
+                }
             }
-        }
 
-// FILTRAR LOS EVENTOS EN FUNCION DE LAS CATEGORIAS CHEQUEADAS
-        console.log(checkedCheckboxes)
-        console.log(arrayAFiltrar)
+            // FILTRAR LOS EVENTOS EN FUNCION DE LAS CATEGORIAS CHEQUEADAS
+            // console.log(checkedCheckboxes)
+            // console.log(arrayAFiltrar)
 
-    })
+            var eventosPorCategoria = []
+            checkedCheckboxes.map(category => {
 
-}
+                let test = arrayAFiltrar.filter(evento => evento.category === category)
+                eventosPorCategoria.push(...test)
+            })
+          pintarHTML(eventosPorCategoria)
+
+        })
+
+    }
 }
