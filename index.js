@@ -6,6 +6,11 @@ let textoHTML = document.getElementById("form")
 let ulNombreEventos = document.getElementById("eventos")
 let arrayAFiltrar = []
 var searchContainer = document.getElementById("searchContainer")
+var inputSearch = document.getElementById("inputSearch")
+
+let checkedCheckboxes = []
+let search = ""
+
 function ChangeTemplateLayaout() {
 
     switch (initialState.paginaANavegar) {
@@ -14,7 +19,8 @@ function ChangeTemplateLayaout() {
             let eventosPasados = eventos.filter(evento => evento.date < fechaBase)
             arrayAFiltrar = eventosPasados
             searchContainer.style.display = "flex"
-
+            inputSearch.value = ""
+            checkedCheckboxes = []
             pintarHTML(eventosPasados)
             eventsCategories(eventosPasados)
 
@@ -23,6 +29,8 @@ function ChangeTemplateLayaout() {
         case "EventosFuturos":
             let eventosFuturos = eventos.filter(evento => evento.date > fechaBase)
             arrayAFiltrar = eventosFuturos
+            inputSearch.value = ""
+            checkedCheckboxes = []
             searchContainer.style.display = "flex"
             pintarHTML(eventosFuturos)
             eventsCategories(eventosFuturos)
@@ -60,14 +68,14 @@ function ChangeTemplateLayaout() {
             let InitAppStyle = document.getElementById("Home")
             InitAppStyle.style.backgroundColor = "pink"
             InitAppStyle.disabled = true
+            inputSearch.value = ""
+            checkedCheckboxes = []
             arrayAFiltrar = eventos
             searchContainer.style.display = "flex"
             pintarHTML(eventos)
             eventsCategories(eventos)
 
-        //console.log("Ocultar Contactos, estadisticas y Mostrar toda la info de datosEventos = todos los eventos")
     }
-
 }
 
 ChangeTemplateLayaout()
@@ -116,31 +124,13 @@ function pintarHTML(array) {
 
 }
 
-var inputSearch = document.getElementById("inputSearch")
 
-inputSearch.addEventListener("keyup", function (evento) { capturaEvento(evento) })
 
-function capturaEvento(evento) {
-    //Capturo lo que el usuario ingresa en el input
+inputSearch.addEventListener("keyup", function (evento) {
     var datoInput = evento.target.value
-
-    // A lo capturado le quito espacios en blanco anteriores y posteriores con trim()
-    // Ademas a lo ingresado lo paso todo a minuscula con toLowerCase()
-    var datoSinEspacios = datoInput.trim().toLowerCase()
-
-    //Aplico un filtro a todos los eventos donde el nombre del evento incluya lo que ingreso el usuario 
-    // con los metodos trim y toLowerCase
-
-    var filtrado = arrayAFiltrar.filter(evento => evento.name.toLowerCase().includes(datoSinEspacios))
-    console.log(filtrado)
-
-    if (filtrado.length === 0) {
-        ulNombreEventos.innerHTML = `<h1 class="ceroResult" >No se encontraron eventos para tu busqueda </h1>`
-    }
-    else {
-        pintarHTML(filtrado)
-    }
-}
+    search = datoInput.trim().toLowerCase()
+    filtrosCombinados()
+})
 
 //CREACION DINAMICA DE CHECKBOX POR CATEGORIA
 
@@ -167,7 +157,6 @@ function checkboxListener() {
     var checkboxs = document.querySelectorAll('input[type=checkbox')
 
     // creo un array vacio para poder guardar los datos de los checkbox con condicion checked true
-    let checkedCheckboxes = []
 
     // recorro cada uno de los input checkbox y les aplico un escuchador de eventos change
     for (i = 0; i < checkboxs.length; i++) {
@@ -179,28 +168,49 @@ function checkboxListener() {
 
             // recorro el array de checkbox para extrer aquellos cuyo atributo checked sea true
             for (i = 0; i < checkboxs.length; i++) {
-
                 if (checkboxs[i].checked) {
-
                     // si se cumple la condicion de checked true los empujo al array que defini para almacenar
                     // los checkbox chequeados
                     checkedCheckboxes.push(checkboxs[i].value)
                 }
             }
-
-            // FILTRAR LOS EVENTOS EN FUNCION DE LAS CATEGORIAS CHEQUEADAS
-            // console.log(checkedCheckboxes)
-            // console.log(arrayAFiltrar)
-
-            var eventosPorCategoria = []
-            checkedCheckboxes.map(category => {
-
-                let test = arrayAFiltrar.filter(evento => evento.category === category)
-                eventosPorCategoria.push(...test)
-            })
-          pintarHTML(eventosPorCategoria)
+            console.log(checkedCheckboxes)
+            filtrosCombinados()
 
         })
 
     }
+}
+
+function filtrosCombinados() {
+    var filtrado = []
+    if (search !== "" && checkedCheckboxes.length > 0) {
+
+        checkedCheckboxes.map(category => filtrado.push(...arrayAFiltrar.filter(evento =>
+            evento.name.toLowerCase().includes(search) && evento.category === category)
+        ))
+        
+    }
+
+    else if (search !== "" && checkedCheckboxes.length == 0) {
+        filtrado = arrayAFiltrar.filter(evento => evento.name.toLowerCase().includes(search))
+       
+    }
+
+    else if (search === "" && checkedCheckboxes.length > 0) {
+
+        checkedCheckboxes.map(category =>
+            filtrado.push(...arrayAFiltrar.filter(evento => evento.category === category))
+        )
+
+    }
+    else {
+        filtrado = arrayAFiltrar
+       
+    }
+
+    filtrado.length > 0 ? 
+    pintarHTML(filtrado) : 
+    ulNombreEventos.innerHTML = `<h1 class="ceroResult" >No se encontraron eventos para tu busqueda </h1>`
+
 }
