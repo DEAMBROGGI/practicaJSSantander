@@ -4,6 +4,7 @@ let eventos = datosAmazing.eventos
 let fechaBase = datosAmazing.fechaActual
 let textoHTML = document.getElementById("form")
 let ulNombreEventos = document.getElementById("eventos")
+let modalComentario = document.getElementById("modalComentario")
 let arrayAFiltrar = []
 var searchContainer = document.getElementById("searchContainer")
 var inputSearch = document.getElementById("inputSearch")
@@ -41,19 +42,39 @@ function ChangeTemplateLayaout() {
 
             textoHTML.innerHTML =
                 `
-            <form action="">
-            <div class="form_input">
-            <label for="email"><i class="fa-solid fa-user"></i></label>
-            <input type="email" name="email" placeholder="email@email.com">
-            </div>
-            <div class="form_input">
-            <label for="pass"><i class="fa-solid fa-lock"></i></label>
-            <input type="password" name="password" placeholder="Password">
-            </div>
+                <form action="">
+                <div class="form_input">
+                    <label for="email"><i class="fa-solid fa-user"></i></label>
+                    <input type="email" name="email" placeholder="email@email.com" required>
+                </div>
+                <div class="form_input">
+                    <label for="type"><i class="fa-solid fa-qrcode"></i></label>
+                    <select id="type" name="type" >
+                        <option value="Varios" selected>Varios</option>
+                        <option value="Reclamo">Reclamo</option>
+                        <option value="Sugerencia">Sugerencia</option>
+                        <option value="Felicitaciones">Felicitaciones</option>
+                    </select>
+                </div>
+                <div class="form_input">
+                    <label for="date"><i class="fa-solid fa-calendar"></i></i></label>
+                    <input type="date"id="date">
+                </div>
+                <div class="form_input">
+                    <label for="comentario"><i class="fa-solid fa-comment"></i></label>
+                    <textarea id="comentario" placeholder="Dejanos tu comentario"></textarea>
+                </div>
+        
+                <div class="boton_form">
+                    <input  class="boton_submit"  type="submit" value="Enviar!!!" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                </div>
             </form>
             `
+
             ulNombreEventos.innerHTML = ""
             searchContainer.style.display = "none"
+            let form = document.querySelector("form")
+            form.addEventListener("submit", function(event){actionForm(event)})
             //console.log("Ocultar las Cards o Estadisticas y va a mostrar el formulario de contactos")
             break;
         case "Estadisticas":
@@ -214,3 +235,9 @@ function filtrosCombinados() {
     ulNombreEventos.innerHTML = `<h1 class="ceroResult" >No se encontraron eventos para tu busqueda </h1>`
 
 }
+
+
+
+ 
+
+          
