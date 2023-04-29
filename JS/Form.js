@@ -38,6 +38,6 @@ function actionForm(event){
 
 }
 function backHome(){   
-    initialState.paginaANavegar = "Home"
+    setState("paginaANavegar", "Home")
  ChangeTemplateLayaout()
 }

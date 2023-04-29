@@ -1,7 +1,8 @@
 
 var texto
-let eventos = datosAmazing.eventos
-let fechaBase = datosAmazing.fechaActual
+
+let eventos
+let fechaBase
 let textoHTML = document.getElementById("form")
 let ulNombreEventos = document.getElementById("eventos")
 let modalComentario = document.getElementById("modalComentario")
@@ -12,8 +13,22 @@ var inputSearch = document.getElementById("inputSearch")
 let checkedCheckboxes = []
 let search = ""
 
-function ChangeTemplateLayaout() {
+async function getData(){
+    let datosApi
+    await fetch("./AE.JSON")
+    .then(response => response.json())
+    .then(json => datosApi = json)
 
+    eventos =  datosApi.eventos
+    fechaBase = datosApi.fechaActual
+
+    ChangeTemplateLayaout()
+}
+
+getData()
+
+ function ChangeTemplateLayaout() {
+   
     switch (initialState.paginaANavegar) {
 
         case "EventosPasados":
@@ -99,7 +114,7 @@ function ChangeTemplateLayaout() {
     }
 }
 
-ChangeTemplateLayaout()
+
 
 var buttons = document.getElementsByClassName("button")
 for (let index = 0; index < buttons.length; index++) {
