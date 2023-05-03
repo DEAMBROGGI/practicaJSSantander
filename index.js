@@ -1,21 +1,19 @@
 
-var texto
-
 let eventos
 let fechaBase
-let textoHTML = document.getElementById("form")
+let formulario = document.getElementById("form")
 let ulNombreEventos = document.getElementById("eventos")
 let modalComentario = document.getElementById("modalComentario")
 let arrayAFiltrar = []
 var searchContainer = document.getElementById("searchContainer")
 var inputSearch = document.getElementById("inputSearch")
-
+var stats = document.getElementById("stats")
 let checkedCheckboxes = []
 let search = ""
 
 async function getData(){
     let datosApi
-    await fetch("./AE.JSON")
+    await fetch("https://amd-amazingevents-api.onrender.com/api/eventos")
     .then(response => response.json())
     .then(json => datosApi = json)
 
@@ -35,6 +33,9 @@ getData()
             let eventosPasados = eventos.filter(evento => evento.date < fechaBase)
             arrayAFiltrar = eventosPasados
             searchContainer.style.display = "flex"
+            ulNombreEventos.style.display = "flex"
+            formulario.style.display = "none"
+            stats.style.display = "none"
             inputSearch.value = ""
             checkedCheckboxes = []
             pintarHTML(eventosPasados)
@@ -47,15 +48,21 @@ getData()
             arrayAFiltrar = eventosFuturos
             inputSearch.value = ""
             checkedCheckboxes = []
+            ulNombreEventos.style.display = "flex"
             searchContainer.style.display = "flex"
+            formulario.style.display = "none"
+            stats.style.display = "none"
             pintarHTML(eventosFuturos)
             eventsCategories(eventosFuturos)
 
             //console.log("Ocultar Contactos, estadisticas y Filtrar datosEventos donde los eventos sean mayores a la fechaBase")
             break;
         case "Contactos":
-
-            textoHTML.innerHTML =
+            ulNombreEventos.style.display = "none"
+            searchContainer.style.display = "none"
+            stats.style.display = "none"
+            formulario.style.display = "flex"
+            formulario.innerHTML =
                 `
                 <form action="">
                 <div class="form_input">
@@ -86,17 +93,17 @@ getData()
             </form>
             `
 
-            ulNombreEventos.innerHTML = ""
-            searchContainer.style.display = "none"
+           
             let form = document.querySelector("form")
             form.addEventListener("submit", function(event){actionForm(event)})
             //console.log("Ocultar las Cards o Estadisticas y va a mostrar el formulario de contactos")
             break;
         case "Estadisticas":
-            texto = "Estas en la pagina de Estadistica"
-            textoHTML.innerHTML = texto
-            ulNombreEventos.innerHTML = ""
+            ulNombreEventos.style.display = "none"
             searchContainer.style.display = "none"
+            formulario.style.display = "none"
+            stats.style.display = "flex"
+            initStats()
             //console.log("Ocultar las Cards o Contactos y va a mostrar Tabla de estadisticas")
             break;
         default:
@@ -107,7 +114,10 @@ getData()
             inputSearch.value = ""
             checkedCheckboxes = []
             arrayAFiltrar = eventos
+            ulNombreEventos.style.display = "flex"
             searchContainer.style.display = "flex"
+            stats.style.display = "none"
+            formulario.style.display = "none"
             pintarHTML(eventos)
             eventsCategories(eventos)
 
@@ -145,7 +155,7 @@ function pintarHTML(array) {
         nombreEventosHTML +=
         `
         <div class="item">
-        <img src="./Imagenes/${evento.image}" alt="${evento.name}">
+        <img src="${evento.image}" alt="${evento.name}">
         <p class="titulo_dos">${evento.name}</p>
         <div class="detalles">
           <p class="precio">Precio: $${evento.price}</p>
@@ -156,7 +166,6 @@ function pintarHTML(array) {
     )
 
     ulNombreEventos.innerHTML = nombreEventosHTML
-    textoHTML.innerHTML = ""
 
 }
 

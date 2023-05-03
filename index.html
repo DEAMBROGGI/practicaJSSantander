@@ -9,11 +9,13 @@
         integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
 
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
     <link rel="stylesheet" href="./Styles/index.css">
     <link rel="stylesheet" href="./Styles/navbar.css">
     <link rel="stylesheet" href="./Styles/cards.css">
     <link rel="stylesheet" href="./Styles/contactos.css">
+    <link rel="stylesheet" href="./Styles/tabla.css">
 
 
     <title>Practica JS</title>
@@ -37,20 +39,94 @@
     </div>
 
     <div id="form"></div>
-
-
-
     <main id="eventos"></main>
-  
-  <!-- Modal -->
-  <div id="modalComentario"></div>
+
+    <div id="stats">
+        <table>
+            <tr class="color">
+              <th colspan="3">Estadísticas de Eventos</th>
+            </tr>
+            <tr class="titulo">
+              <th>Eventos con Mayor Porcentaje de Asistencia</th>
+              <th>Eventos con Menor Porcentaje de Asistencia</th>
+              <th>Eventos de Mayor Capacidad</th>
+            </tr>
+            <tr>
+              <td>Metallica en Concierto</td>
+              <td>Fiesta de Disfraces</td>
+              <td>Metallica en Concierto</td>
+            </tr>
+            <tr>
+              <td>Feria del libro Escolar</td>
+              <td>Avengers</td>
+              <td>Feria del libro Escolar</td>
+            </tr>
+            <tr class="color">
+              <th colspan="3">Estadisticas de Eventos Próximos por Catgoría</th>
+            </tr>
+            <tr class="titulo">
+              <th>Categorías</th>
+              <th>Ingresos</th>
+              <th>Porcentaje de Estimación</th>
+            </tr>
+            <tr>
+              <td>Metallica en Concierto</td>
+              <td>Concierto de Música</td>
+              <td>138.000</td>
+            </tr>
+            <tr>
+              <td>Noche de Halloween</td>
+              <td>Fiesta de Disfraces</td>
+              <td>9.000</td>
+            </tr>
+            <tr>
+              <td>Avengers</td>
+              <td>Vamos al Cine</td>
+              <td>9.000</td>
+            </tr>
+            <tr class="color">
+                <th colspan="3">Estadisticas de Eventos Pasados por Catgoría</th>
+            </tr>
+            <tr class="titulo">
+              <th>Categorías</th>
+              <th>Ingresos</th>
+              <th>Porcentaje de Asistencia</th>
+            </tr>
+            <tr>
+              <td>10K por la vida</td>
+              <td>Carrera</td>
+              <td>25.698</td>
+            </tr>
+            <tr>
+              <td>Feria del libro Escolar</td>
+              <td>Intercambio de Libros</td>
+              <td>123.286</td>
+            </tr>
+            <tr>
+              <td>Parque Jurásico</td>
+              <td>Salida al Museo</td>
+              <td>65.892</td>
+            </tr>
+            <tr>
+              <td>Fiesta de las Colectividades</td>
+              <td>Feria de Comida</td>
+              <td>42.756</td>
+            </tr>
+          </table>
+    </div>
+
+    <!-- Modal -->
+    <div id="modalComentario"></div>
 
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
+        crossorigin="anonymous"></script>
     <script src="./context.js"></script>
     <script src="./index.js"></script>
     <script src="./JS/Form.js"></script>
-
+    <script src="./JS/stast.js"></script>
+    
 </body>
 
 </html>
