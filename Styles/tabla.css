@@ -1,13 +1,14 @@
-.tabla{
-    width: 100%;
+#stats{
+    width: 100vw;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
 }
 
 table{
     width: 90%;
-    height: 420px;
+    height: auto;
     background-color:rgba(126, 100, 100, 0.137);
     margin-bottom: 35px;
 }
